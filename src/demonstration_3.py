@@ -16,6 +16,43 @@ original list and none of the values should be changed.
 Given `[[1, 5, 4], ['a', 3, 5], ['b'], [], ['1', 2, 3]]`, your function should
 return `[[1, 5, 4], ['b']]`.
 """
+
+from functools import reduce
+
 def filter_homogenous(arrays):
     # Your code here
+    newArray = []
+    for array in arrays:
+        print("array: ", array)
+        if len(array) == 0:
+            continue
+        if len(array) == 1:
+            newArray.append(array)
+            continue
+        is_homogenous = True
+        for i in range(len(array) - 1):
+            # while i < len(array) - 1:
+            if type(array[i]) != type(array[i + 1]):
+                is_homogenous = False
+        if is_homogenous:
+            newArray.append(array)
+            print("Added array to newArray", newArray)
+        print("is homogenous: ", is_homogenous)
+        # i += 1
+    print(newArray)
 
+def filter_homogenous_reduce(arrays):
+    return_array = []
+    for list in arrays:
+        if len(list) < 1: continue
+        homogenous = reduce(type_check, list, list[0])
+        if homogenous:
+            return_array.append(list)
+    return return_array
+
+def type_check(x, y):
+    if type(x) == type(y):
+        return x
+    return False
+
+print(filter_homogenous([[1, 5, 4], ['a', 3, 5], ['b'], [], ['1', 2, 3]]))
